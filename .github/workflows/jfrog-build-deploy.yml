@@ -12,8 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm test
       - run: npm install -g @angular/cli
+      - run: npm test
 
       # This action sets up the JFrog CLI with the Artifactory URL and access token     
       - uses: jfrog/setup-jfrog-cli@v4

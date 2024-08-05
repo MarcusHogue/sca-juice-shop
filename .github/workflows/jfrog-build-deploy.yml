@@ -24,17 +24,24 @@ jobs:
           export SERVER_ID="jfrog-sca-test"
           jf c add $SERVER_ID --url=${{ secrets.JF_URL }} --access-token=$ACCESS_TOKEN --interactive=false
 
-      - run: |
+      - name: JFrog CLI Ping
+        run: |
           jf rt ping
-          # Configure NPM  
+      - name: NPM Config 
+        run: |
           jf npmc --repo-deploy=sca-npm --repo-resolve=sca-npm
-          # NPM Install
+      - name: NPM Install 
+        run: |
           jf npm install --build-name=sca-npm-build --build-number=1.0.${{github.run_number}}
-          # add dependencies 
+      - name: Add dependencies 
+        run: |
           jf rt build-add-git sca-npm-build 1.0.${{github.run_number}}
-          # collect git 
+      - name: Collect environment variables
+        run: |
           jf rt build-collect-env sca-npm-build 1.0.${{github.run_number}}
-          # npm publish 
+      - name: NPM Publsih 
+        run: |
           jf rt npm-publish --build-name=sca-npm-build --build-number=1.0.${{github.run_number}}
-          # build publish
+      - name: Build Publish
+        run: |
           jf rt build-publish sca-npm-build 1.0.${{github.run_number}}

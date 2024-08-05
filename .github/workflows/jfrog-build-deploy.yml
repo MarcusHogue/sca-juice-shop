@@ -12,7 +12,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install -g @angular/cli
 
       # This action sets up the JFrog CLI with the Artifactory URL and access token     
       - uses: jfrog/setup-jfrog-cli@v4
@@ -26,7 +25,7 @@ jobs:
       # This command adds a new server configuration to the JFrog CLI   
       - run: |
           export SERVER_ID="jfrog-sca-test"
-          jf c add $SERVER_ID --url=${{ secrets.JF_URL }} --access-token=$ACCESS_TOKEN --interactive=false
+          jf c add $SERVER_ID --url=${{ secrets.JF_URL }} --access-token=${{ secrets.JF_ACCESS_TOKEN}} --interactive=false
 
       - name: JFrog CLI Ping
         run: |

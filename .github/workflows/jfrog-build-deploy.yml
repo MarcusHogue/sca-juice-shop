@@ -4,6 +4,9 @@ on: [push,workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./juice-shop
    
     steps:
       # This action checks out the code from the repository
@@ -17,7 +20,7 @@ jobs:
         env:
           JF_URL: ${{ secrets.JF_URL }}
           JF_PROJECT: ${{ vars.JF_PROJECT }}
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN}}
 
       # This command adds a new server configuration to the JFrog CLI   
       - run: |

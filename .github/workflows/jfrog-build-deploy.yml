@@ -8,7 +8,11 @@ jobs:
     steps:
       # This action checks out the code from the repository
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm test
 
       # This action sets up the JFrog CLI with the Artifactory URL and access token     
       - uses: jfrog/setup-jfrog-cli@v4
@@ -33,6 +37,7 @@ jobs:
       - name: NPM Install 
         run: |
           jf npm install --build-name=sca-npm-build --build-number=1.0.${{github.run_number}}
+          npm config set registry http://<ARTIFACTORY_SERVER_DOMAIN>:8081/artifactory/api/npm/npm-repo/
       - name: Add dependencies 
         run: |
           jf rt build-add-git sca-npm-build 1.0.${{github.run_number}}

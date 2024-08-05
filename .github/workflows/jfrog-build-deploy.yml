@@ -1,5 +1,5 @@
 name: "Push Build to Artifactory"
-on: [push,workflow_dispatch]
+on: [workflow_dispatch]
 
 jobs:
   build:
@@ -11,8 +11,7 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - run: npm ci
+          node-version: 20
       - run: npm test
 
       # This action sets up the JFrog CLI with the Artifactory URL and access token     

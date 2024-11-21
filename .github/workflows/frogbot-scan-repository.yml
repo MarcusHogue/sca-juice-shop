@@ -44,6 +44,19 @@ jobs:
           # The name of the branch on which Frogbot will perform the scan
           JF_GIT_BASE_BRANCH: ${{ matrix.branch }}
 
+      - uses: jfrog/setup-jfrog-cli@v4
+        name: Setup JFrog CLI
+        id: setup-cli
+        env:
+          JF_URL: ${{ secrets.JF_URL }}
+          JF_PROJECT: ${{ vars.JF_PROJECT }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN}}
+
+      # This command adds a new server configuration to the JFrog CLI   
+      - run: |
+          export SERVER_ID="jfrog-sca-test"
+          jf c add $SERVER_ID --url=${{ secrets.JF_URL }} --access-token=${{ secrets.JF_ACCESS_TOKEN}} --interactive=false
+
       - name: JFrog CLI Ping
         run: |
           jf rt ping

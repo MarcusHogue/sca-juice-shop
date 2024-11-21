@@ -44,6 +44,14 @@ jobs:
           # The name of the branch on which Frogbot will perform the scan
           JF_GIT_BASE_BRANCH: ${{ matrix.branch }}
 
+      - name: JFrog CLI Ping
+        run: |
+          jf rt ping
+          
+      - name: Source Scan 
+        run: |
+          jf audit
+
           # [Optional, default: https://api.github.com]
           # API endpoint to GitHub
           # JF_GIT_API_ENDPOINT: https://github.example.com
